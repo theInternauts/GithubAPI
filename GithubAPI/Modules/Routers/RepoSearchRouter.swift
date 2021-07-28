@@ -15,12 +15,16 @@ class RepoSearchRouter: RepoSearchPresenterToRouterProtocol {
         let interactor: RepoSearchPresenterToInteractorProtocol = RepoSearchInteractor()
         let router: RepoSearchPresenterToRouterProtocol = RepoSearchRouter()
         
-        view.presenter? = presenter
-        presenter.view? = view
-        presenter.interactor? = interactor
-        presenter.router? = router
+        view.presenter = presenter
+        presenter.view = view
+        presenter.interactor = interactor
+        presenter.router = router
         interactor.presenter = presenter
         
         return view as! RepoSearchViewController
+    }
+    
+    func pushToRepoDetail(on view: RepoSearchPresenterToViewProtocol, with repo: Repository) -> Void {
+        print("tapped cell: \(repo.title).")
     }
 }
