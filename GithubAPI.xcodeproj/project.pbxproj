@@ -9,12 +9,15 @@
 /* Begin PBXBuildFile section */
 		6D8C20A126B165EE00C38376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A026B165EE00C38376 /* AppDelegate.swift */; };
 		6D8C20A326B165EE00C38376 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A226B165EE00C38376 /* SceneDelegate.swift */; };
-		6D8C20A526B165EE00C38376 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A426B165EE00C38376 /* ViewController.swift */; };
-		6D8C20A826B165EE00C38376 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C20A626B165EE00C38376 /* Main.storyboard */; };
 		6D8C20AA26B165F300C38376 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C20A926B165F300C38376 /* Assets.xcassets */; };
 		6D8C20AD26B165F300C38376 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C20AB26B165F300C38376 /* LaunchScreen.storyboard */; };
 		6D8C20B826B165F300C38376 /* GithubAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20B726B165F300C38376 /* GithubAPITests.swift */; };
 		6D8C20C326B165F400C38376 /* GithubAPIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20C226B165F400C38376 /* GithubAPIUITests.swift */; };
+		6D8C20DB26B17E2E00C38376 /* RepoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20DA26B17E2E00C38376 /* RepoSearchViewController.swift */; };
+		6D8C20DD26B17FB100C38376 /* RepoSearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20DC26B17FB100C38376 /* RepoSearchRouter.swift */; };
+		6D8C20DF26B1815B00C38376 /* RepoSearchContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20DE26B1815B00C38376 /* RepoSearchContracts.swift */; };
+		6D8C20E126B1888E00C38376 /* RepoSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20E026B1888E00C38376 /* RepoSearchPresenter.swift */; };
+		6D8C20E326B1898B00C38376 /* RepoSearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20E226B1898B00C38376 /* RepoSearchInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +41,6 @@
 		6D8C209D26B165EE00C38376 /* GithubAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8C20A026B165EE00C38376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D8C20A226B165EE00C38376 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6D8C20A426B165EE00C38376 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6D8C20A726B165EE00C38376 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6D8C20A926B165F300C38376 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D8C20AC26B165F300C38376 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6D8C20AE26B165F300C38376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +50,11 @@
 		6D8C20BE26B165F400C38376 /* GithubAPIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubAPIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8C20C226B165F400C38376 /* GithubAPIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPIUITests.swift; sourceTree = "<group>"; };
 		6D8C20C426B165F400C38376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D8C20DA26B17E2E00C38376 /* RepoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoSearchViewController.swift; sourceTree = "<group>"; };
+		6D8C20DC26B17FB100C38376 /* RepoSearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoSearchRouter.swift; sourceTree = "<group>"; };
+		6D8C20DE26B1815B00C38376 /* RepoSearchContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoSearchContracts.swift; sourceTree = "<group>"; };
+		6D8C20E026B1888E00C38376 /* RepoSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoSearchPresenter.swift; sourceTree = "<group>"; };
+		6D8C20E226B1898B00C38376 /* RepoSearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoSearchInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +105,9 @@
 		6D8C209F26B165EE00C38376 /* GithubAPI */ = {
 			isa = PBXGroup;
 			children = (
-				6D8C20A026B165EE00C38376 /* AppDelegate.swift */,
-				6D8C20A226B165EE00C38376 /* SceneDelegate.swift */,
-				6D8C20A426B165EE00C38376 /* ViewController.swift */,
-				6D8C20A626B165EE00C38376 /* Main.storyboard */,
-				6D8C20A926B165F300C38376 /* Assets.xcassets */,
-				6D8C20AB26B165F300C38376 /* LaunchScreen.storyboard */,
-				6D8C20AE26B165F300C38376 /* Info.plist */,
+				6D8C20D026B17C9400C38376 /* Modules */,
+				6D8C20D626B17D2500C38376 /* Services */,
+				6D8C20D826B17D6700C38376 /* Bootstrap */,
 			);
 			path = GithubAPI;
 			sourceTree = "<group>";
@@ -126,6 +128,85 @@
 				6D8C20C426B165F400C38376 /* Info.plist */,
 			);
 			path = GithubAPIUITests;
+			sourceTree = "<group>";
+		};
+		6D8C20D026B17C9400C38376 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20D926B17D8900C38376 /* Presenters */,
+				6D8C20D526B17CF100C38376 /* Contracts */,
+				6D8C20D426B17CE500C38376 /* Routers */,
+				6D8C20D326B17CD100C38376 /* Entities */,
+				6D8C20D226B17CC700C38376 /* Interactors */,
+				6D8C20D126B17CC200C38376 /* Views */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		6D8C20D126B17CC200C38376 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20DA26B17E2E00C38376 /* RepoSearchViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6D8C20D226B17CC700C38376 /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20E226B1898B00C38376 /* RepoSearchInteractor.swift */,
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
+		6D8C20D326B17CD100C38376 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		6D8C20D426B17CE500C38376 /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20DC26B17FB100C38376 /* RepoSearchRouter.swift */,
+			);
+			path = Routers;
+			sourceTree = "<group>";
+		};
+		6D8C20D526B17CF100C38376 /* Contracts */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20DE26B1815B00C38376 /* RepoSearchContracts.swift */,
+			);
+			path = Contracts;
+			sourceTree = "<group>";
+		};
+		6D8C20D626B17D2500C38376 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6D8C20D826B17D6700C38376 /* Bootstrap */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20A926B165F300C38376 /* Assets.xcassets */,
+				6D8C20AB26B165F300C38376 /* LaunchScreen.storyboard */,
+				6D8C20AE26B165F300C38376 /* Info.plist */,
+				6D8C20A026B165EE00C38376 /* AppDelegate.swift */,
+				6D8C20A226B165EE00C38376 /* SceneDelegate.swift */,
+			);
+			path = Bootstrap;
+			sourceTree = "<group>";
+		};
+		6D8C20D926B17D8900C38376 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				6D8C20E026B1888E00C38376 /* RepoSearchPresenter.swift */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +314,6 @@
 			files = (
 				6D8C20AD26B165F300C38376 /* LaunchScreen.storyboard in Resources */,
 				6D8C20AA26B165F300C38376 /* Assets.xcassets in Resources */,
-				6D8C20A826B165EE00C38376 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,8 +338,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D8C20A526B165EE00C38376 /* ViewController.swift in Sources */,
+				6D8C20E126B1888E00C38376 /* RepoSearchPresenter.swift in Sources */,
 				6D8C20A126B165EE00C38376 /* AppDelegate.swift in Sources */,
+				6D8C20DD26B17FB100C38376 /* RepoSearchRouter.swift in Sources */,
+				6D8C20E326B1898B00C38376 /* RepoSearchInteractor.swift in Sources */,
+				6D8C20DF26B1815B00C38376 /* RepoSearchContracts.swift in Sources */,
+				6D8C20DB26B17E2E00C38376 /* RepoSearchViewController.swift in Sources */,
 				6D8C20A326B165EE00C38376 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,14 +380,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6D8C20A626B165EE00C38376 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6D8C20A726B165EE00C38376 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6D8C20AB26B165F300C38376 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
