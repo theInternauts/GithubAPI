@@ -10,6 +10,8 @@ import UIKit
 class RepoSearchViewController: UIViewController {
     var presenter: RepoSearchViewToPresenterProtocol?
     var tableView: UITableView?
+    var searchController: UISearchController?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,7 @@ class RepoSearchViewController: UIViewController {
     
     func buildViews() -> Void {
         configureTableViews()
+        configureSearchController()
     }
     
     func configureTableViews() -> Void {
@@ -34,9 +37,24 @@ class RepoSearchViewController: UIViewController {
         tableView?.pinToEdges(of: self.view, constrainToMargins: true)
         tableView?.backgroundColor = .white        
     }
+    
+    func configureSearchController() -> Void {
+        // MARK: - NavigationController Config
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchResultsUpdater = self
+        searchController?.delegate = self
+        searchController?.obscuresBackgroundDuringPresentation = false
+        searchController?.searchBar.placeholder = "Search Repositories"
+        
+        // MARK: - NavigationController Config
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
 }
 
 
+// MARK: - RepoSearchPresenterToViewProtocol
 extension RepoSearchViewController: RepoSearchPresenterToViewProtocol {
     func showData() -> Void {
         tableView?.reloadData()
@@ -44,12 +62,34 @@ extension RepoSearchViewController: RepoSearchPresenterToViewProtocol {
 }
 
 
+// MARK: - UISearchResultsUpdating
+extension RepoSearchViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+    let searchBar = searchController.searchBar
+    if !(searchBar.text?.isEmpty ?? true) {
+        presenter?.fetchSearchResults(with: searchBar.text!)
+    }
+  }
+}
+
+
+// MARK: - UISearchControllerDelegate
+extension RepoSearchViewController: UISearchControllerDelegate {
+    func didDismissSearchController(_ searchController: UISearchController) {
+        UIViewController.printUtil(["EVENT": "UISearchControllerDelegate"])
+        presenter?.updateView()
+    }
+}
+
+
+// MARK: - UITableViewDelegate
 extension RepoSearchViewController: UITableViewDelegate {}
 
 
+// MARK: - UITableViewDataSource
 extension RepoSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return presenter?.getRepoCount() ?? 0
+        return presenter?.getRepoCount() ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,7 +110,7 @@ extension RepoSearchViewController: UITableViewDataSource {
 }
 
 
-// MARK - Debugging Utils
+// MARK: - Debugging Utils
 extension UIViewController {
     // DEBUGGING UTILS
     static var debugUtilsEnabled = GithubAPIApp.debugUtilsEnabled

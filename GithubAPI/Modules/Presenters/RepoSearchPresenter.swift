@@ -11,6 +11,12 @@ class RepoSearchPresenter {
     var view: RepoSearchPresenterToViewProtocol?
     var router: RepoSearchPresenterToRouterProtocol?
     var interactor: RepoSearchPresenterToInteractorProtocol?
+    
+    func sanitizeAndFormatString(_ inputString: String) -> String {
+        let whitespaceCharacterSet = CharacterSet.whitespaces
+        let sanitizedOutput = inputString.trimmingCharacters(in: whitespaceCharacterSet)
+        return sanitizedOutput.lowercased()
+    }
 }
 
 extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
@@ -34,10 +40,18 @@ extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
         router?.pushToRepoDetail(on: view!, with: repo)
     }
     
+    func fetchSearchResults(with query: String) -> Void {
+        interactor?.fetchSearchResults(with: sanitizeAndFormatString(query))
+    }
+    
 }
 
 extension RepoSearchPresenter: RepoSearchInteractorToPresenterProtocol {
     func fetchReposSuccess() -> Void {
+        view?.showData()
+    }
+    
+    func fetchSearchResultsSuccess() -> Void {
         view?.showData()
     }
 }

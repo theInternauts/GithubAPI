@@ -14,6 +14,7 @@ protocol RepoSearchViewToPresenterProtocol: AnyObject {
     func getRepoCount() -> Int?
     func getRepo(at index: Int) -> Repository?
     func didSelectRow(at index: Int) -> Void
+    func fetchSearchResults(with: String) -> Void
 }
 
 protocol RepoSearchPresenterToViewProtocol: AnyObject {
@@ -24,7 +25,7 @@ protocol RepoSearchPresenterToViewProtocol: AnyObject {
 
 protocol RepoSearchPresenterToRouterProtocol: AnyObject {
     static func createModule() -> RepoSearchViewController
-    func pushToRepoDetail(on view: RepoSearchPresenterToViewProtocol, with repo: Repository)
+    func pushToRepoDetail(on view: RepoSearchPresenterToViewProtocol, with repo: Repository) -> Void
 }
 
 protocol RepoSearchPresenterToInteractorProtocol: AnyObject {
@@ -33,10 +34,12 @@ protocol RepoSearchPresenterToInteractorProtocol: AnyObject {
     func getRepoCount() -> Int
     func getRepo(at index: Int) -> Repository
     func fetchRepos() -> Void
+    func fetchSearchResults(with: String) -> Void
 }
 
 protocol RepoSearchInteractorToPresenterProtocol: AnyObject {
     var interactor: RepoSearchPresenterToInteractorProtocol? { get set }
     
     func fetchReposSuccess() -> Void
+    func fetchSearchResultsSuccess() -> Void
 }

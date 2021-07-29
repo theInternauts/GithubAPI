@@ -9,13 +9,17 @@ import UIKit
 
 class RepoSearchInteractor {
     var presenter: RepoSearchInteractorToPresenterProtocol?
-    var repos: [Repository] = [
-        Repository(title: "word 0"),
-        Repository(title: "word 1"),
-        Repository(title: "word 2"),
-        Repository(title: "word 3"),
-        Repository(title: "word 4")
-    ]
+    var repos: [Repository] = []
+    
+    init() {
+        self.resetLocalData()
+    }
+    
+    func filterLocalData(with query: String ) -> [Repository] {
+        return repos.filter({ (repo: Repository) -> Bool in
+            return repo.title.contains(query)
+        })
+    }
 }
 
 extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
@@ -28,6 +32,27 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
     }
     
     func fetchRepos() -> Void {
+        // call API Module
+        resetLocalData()
         presenter?.fetchReposSuccess()
+    }
+    
+    func fetchSearchResults(with query: String) -> Void {
+        // call API Module with params
+        resetLocalData()
+        repos = filterLocalData(with: query)
+        presenter?.fetchSearchResultsSuccess()
+    }
+    
+    func resetLocalData() -> Void {
+        print("resetting")
+        repos = [
+            Repository(title: "word 0"),
+            Repository(title: "word 1"),
+            Repository(title: "word 2"),
+            Repository(title: "word 3"),
+            Repository(title: "word 4")
+        ]
+        
     }
 }
