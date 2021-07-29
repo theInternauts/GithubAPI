@@ -8,7 +8,7 @@
 import UIKit
 
 class RepoSearchPresenter {
-    var view: RepoSearchPresenterToViewProtocol?
+    weak var view: RepoSearchPresenterToViewProtocol?
     var router: RepoSearchPresenterToRouterProtocol?
     var interactor: RepoSearchPresenterToInteractorProtocol?
     
@@ -16,6 +16,10 @@ class RepoSearchPresenter {
         let whitespaceCharacterSet = CharacterSet.whitespaces
         let sanitizedOutput = inputString.trimmingCharacters(in: whitespaceCharacterSet)
         return sanitizedOutput.lowercased()
+    }
+    
+    deinit {
+        UIViewController.printUtil(["PRESENTER:RepoSearchPresenter": "deinitialized"])
     }
 }
 

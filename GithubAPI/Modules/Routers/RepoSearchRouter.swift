@@ -5,7 +5,7 @@
 //  Created by Christopher Wallace on 7/28/21.
 //
 
-import Foundation
+import UIKit
 
 class RepoSearchRouter: RepoSearchPresenterToRouterProtocol {
     
@@ -26,5 +26,9 @@ class RepoSearchRouter: RepoSearchPresenterToRouterProtocol {
     
     func pushToRepoDetail(on view: RepoSearchPresenterToViewProtocol, with repo: Repository) -> Void {
         print("tapped cell: \(repo.title).")
+    }
+    
+    deinit {
+        UIViewController.printUtil(["ROUTER:RepoSearchRouter": "deinitialized"])
     }
 }

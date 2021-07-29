@@ -8,7 +8,7 @@
 import UIKit
 
 class RepoSearchInteractor {
-    var presenter: RepoSearchInteractorToPresenterProtocol?
+    weak var presenter: RepoSearchInteractorToPresenterProtocol?
     var repos: [Repository] = []
     
     init() {
@@ -19,6 +19,10 @@ class RepoSearchInteractor {
         return repos.filter({ (repo: Repository) -> Bool in
             return repo.title.contains(query)
         })
+    }
+    
+    deinit {
+        UIViewController.printUtil(["INTERACTOR:RepoSearchInteractor": "deinitialized"])
     }
 }
 

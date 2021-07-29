@@ -51,6 +51,10 @@ class RepoSearchViewController: UIViewController {
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
     }
+    
+    deinit {
+        UIViewController.printUtil(["VIEW:RepoSearchViewController": "deinitialized"])
+    }
 }
 
 
