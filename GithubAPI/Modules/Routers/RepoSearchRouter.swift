@@ -7,8 +7,7 @@
 
 import UIKit
 
-class RepoSearchRouter: RepoSearchPresenterToRouterProtocol {
-    
+class RepoSearchRouter: RepoSearchPresenterToRouterProtocol {    
     class func createModule() -> RepoSearchViewController {
         let view: RepoSearchPresenterToViewProtocol = RepoSearchViewController()
         let presenter: RepoSearchInteractorToPresenterProtocol & RepoSearchViewToPresenterProtocol = RepoSearchPresenter()
@@ -25,10 +24,10 @@ class RepoSearchRouter: RepoSearchPresenterToRouterProtocol {
     }
     
     func pushToRepoDetail(on view: RepoSearchPresenterToViewProtocol, with repo: Repository) -> Void {
-        print("tapped cell: \(repo.title).")
+        NSObject.printUtil(["tapped cell": "\(repo.fullName)."])
     }
     
     deinit {
-        UIViewController.printUtil(["ROUTER:RepoSearchRouter": "deinitialized"])
+        NSObject.printUtil(["ROUTER:RepoSearchRouter": "deinitialized"])
     }
 }

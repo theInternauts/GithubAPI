@@ -5,6 +5,7 @@
 //  Created by Christopher Wallace on 7/28/21.
 //
 
+import Foundation
 
 protocol RepoSearchViewToPresenterProtocol: AnyObject {
     var view: RepoSearchPresenterToViewProtocol? { get set }
@@ -12,15 +13,18 @@ protocol RepoSearchViewToPresenterProtocol: AnyObject {
     
     func updateView() -> Void
     func getRepoCount() -> Int?
+    func getTotalRepoSearchResultsCount() -> Int?
     func getRepo(at index: Int) -> Repository?
     func didSelectRow(at index: Int) -> Void
-    func fetchSearchResults(with: String) -> Void
+    func fetchNextPage(with query: String?) -> Void
+    func fetchRepos(with: String?) -> Void
 }
 
 protocol RepoSearchPresenterToViewProtocol: AnyObject {
     var presenter: RepoSearchViewToPresenterProtocol? { get set }
     
     func showData() -> Void
+    func fetchReposSuccess(with newIndexPathsToReload: [IndexPath]?) -> Void
 }
 
 protocol RepoSearchPresenterToRouterProtocol: AnyObject {
@@ -32,14 +36,16 @@ protocol RepoSearchPresenterToInteractorProtocol: AnyObject {
     var presenter: RepoSearchInteractorToPresenterProtocol? { get set }
     
     func getRepoCount() -> Int
+    func getTotalRepoSearchResultsCount() -> Int
     func getRepo(at index: Int) -> Repository
-    func fetchRepos() -> Void
-    func fetchSearchResults(with: String) -> Void
+    func getFetchStatus() -> Bool
+    func getLastFetchResponseData() -> [Repository]
+    func getPageNumber() -> Int
+    func fetchRepos(_ with: String, isNewSearch: Bool, onPage: Int) -> Void
 }
 
 protocol RepoSearchInteractorToPresenterProtocol: AnyObject {
     var interactor: RepoSearchPresenterToInteractorProtocol? { get set }
     
     func fetchReposSuccess() -> Void
-    func fetchSearchResultsSuccess() -> Void
 }

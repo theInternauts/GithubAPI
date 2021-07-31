@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D5DE4C526B6532D00B0398D /* LazyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4C426B6532D00B0398D /* LazyTableCell.swift */; };
 		6D8C20A126B165EE00C38376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A026B165EE00C38376 /* AppDelegate.swift */; };
 		6D8C20A326B165EE00C38376 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A226B165EE00C38376 /* SceneDelegate.swift */; };
 		6D8C20AA26B165F300C38376 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C20A926B165F300C38376 /* Assets.xcassets */; };
@@ -20,6 +21,9 @@
 		6D8C20E326B1898B00C38376 /* RepoSearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20E226B1898B00C38376 /* RepoSearchInteractor.swift */; };
 		6D8C20E526B1953F00C38376 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20E426B1953F00C38376 /* Constants.swift */; };
 		6D8C20E726B1A3E400C38376 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20E626B1A3E400C38376 /* Repository.swift */; };
+		6D8C20E926B2934700C38376 /* GitHubAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20E826B2934700C38376 /* GitHubAPIService.swift */; };
+		6D8C20EB26B323C700C38376 /* GithubAPIContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20EA26B323C700C38376 /* GithubAPIContracts.swift */; };
+		6D8C20ED26B4476C00C38376 /* Dispatcher+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20EC26B4476C00C38376 /* Dispatcher+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D5DE4C426B6532D00B0398D /* LazyTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTableCell.swift; sourceTree = "<group>"; };
 		6D8C209D26B165EE00C38376 /* GithubAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8C20A026B165EE00C38376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D8C20A226B165EE00C38376 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +64,9 @@
 		6D8C20E226B1898B00C38376 /* RepoSearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoSearchInteractor.swift; sourceTree = "<group>"; };
 		6D8C20E426B1953F00C38376 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6D8C20E626B1A3E400C38376 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		6D8C20E826B2934700C38376 /* GitHubAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIService.swift; sourceTree = "<group>"; };
+		6D8C20EA26B323C700C38376 /* GithubAPIContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubAPIContracts.swift; sourceTree = "<group>"; };
+		6D8C20EC26B4476C00C38376 /* Dispatcher+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dispatcher+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				6D8C20E626B1A3E400C38376 /* Repository.swift */,
+				6D5DE4C426B6532D00B0398D /* LazyTableCell.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -184,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				6D8C20DE26B1815B00C38376 /* RepoSearchContracts.swift */,
+				6D8C20EA26B323C700C38376 /* GithubAPIContracts.swift */,
 			);
 			path = Contracts;
 			sourceTree = "<group>";
@@ -191,6 +201,8 @@
 		6D8C20D626B17D2500C38376 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6D8C20E826B2934700C38376 /* GitHubAPIService.swift */,
+				6D8C20EC26B4476C00C38376 /* Dispatcher+Ext.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -346,12 +358,16 @@
 			files = (
 				6D8C20E126B1888E00C38376 /* RepoSearchPresenter.swift in Sources */,
 				6D8C20A126B165EE00C38376 /* AppDelegate.swift in Sources */,
+				6D8C20ED26B4476C00C38376 /* Dispatcher+Ext.swift in Sources */,
 				6D8C20DD26B17FB100C38376 /* RepoSearchRouter.swift in Sources */,
 				6D8C20E326B1898B00C38376 /* RepoSearchInteractor.swift in Sources */,
+				6D5DE4C526B6532D00B0398D /* LazyTableCell.swift in Sources */,
 				6D8C20DF26B1815B00C38376 /* RepoSearchContracts.swift in Sources */,
 				6D8C20E726B1A3E400C38376 /* Repository.swift in Sources */,
 				6D8C20DB26B17E2E00C38376 /* RepoSearchViewController.swift in Sources */,
+				6D8C20E926B2934700C38376 /* GitHubAPIService.swift in Sources */,
 				6D8C20A326B165EE00C38376 /* SceneDelegate.swift in Sources */,
+				6D8C20EB26B323C700C38376 /* GithubAPIContracts.swift in Sources */,
 				6D8C20E526B1953F00C38376 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
