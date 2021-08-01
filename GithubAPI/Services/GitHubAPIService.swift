@@ -88,7 +88,6 @@ extension Endpoint {
         components.host = "api.github.com"
         components.path = path
         components.queryItems = queryItems
-
         return components.url
     }
 }

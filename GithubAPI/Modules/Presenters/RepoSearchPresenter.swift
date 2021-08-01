@@ -62,9 +62,7 @@ class RepoSearchPresenter {
 }
 
 extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
-    func updateView() -> Void {
-//        fetchRepos(with: .none)
-    }
+    func updateView() -> Void {}
     
     func getRepoCount() -> Int? {
         return interactor?.getRepoCount()
@@ -80,7 +78,6 @@ extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
     
     func didSelectRow(at index: Int) -> Void {
         guard let repo = getRepo(at: index) else {
-            NSObject.printUtil(["RepoSearchPresenter:didSelectRow": "data for detail view not found - index: \(index)"])
             return
         }
         router?.pushToRepoDetail(on: view!, with: repo)

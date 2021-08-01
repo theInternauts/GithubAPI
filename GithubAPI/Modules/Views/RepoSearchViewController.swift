@@ -43,7 +43,7 @@ class RepoSearchViewController: UIViewController {
         
         view.addSubview(tableView!)
         tableView?.pinToEdges(of: self.view, constrainToMargins: true)
-        tableView?.backgroundColor = .white
+        tableView?.backgroundColor = .systemBackground
     }
     
     func configureSearchController() -> Void {
@@ -109,7 +109,7 @@ extension RepoSearchViewController: UITableViewDataSourcePrefetching {
         if indexPaths.contains(where: isLoadingCell) {
             if let presenter = self.presenter {
                 presenter.fetchNextPage(with: .none)
-                NSObject.printUtil(["repo ct": "\(presenter.getRepoCount())"])
+                NSObject.printUtil(["repo ct": "\(presenter.getRepoCount() ?? 0)"])
             }
         }
     }

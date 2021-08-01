@@ -9,13 +9,13 @@ import UIKit
 
 class RepoSearchInteractor {
     weak var presenter: RepoSearchInteractorToPresenterProtocol?
-    private var repos: [Repository] = []
-    private var lastFetch: [Repository] = []
-    private var dataManager = GitHubAPIService.shared()
-    private var apiLimitRate: Double = 1.0 // (1/20) // docs say 1/30 secs
-    private var isFetchingData = false
-    private var totalRepoSearchResultsCount: Int = 0
-    private let resultsPerPage: Int = 30
+    private var repos: [Repository]                 = []
+    private var lastFetch: [Repository]             = []
+    private var dataManager: GitHubAPIProtocol      = GitHubAPIService.shared()
+    private var apiLimitRate: Double                = 1.5
+    private var isFetchingData                      = false
+    private var totalRepoSearchResultsCount: Int    = 0
+    private let resultsPerPage: Int                 = 30
     
     
     func filterLocalData(with query: String ) -> [Repository] {
@@ -62,11 +62,11 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         isFetchingData = true
         let deadline = DispatchTime.now() + apiLimitRate
         DispatchQueue.global().ext_Throttle(deadline: deadline) { [weak self] in
-            NSObject.printUtil(["Q": "\(onPage)"])
+            NSObject.printUtil(["Page": "\(onPage)"])
             self?.dataManager.request(.searchRepositories(matching: query,
-                                                     onPage: onPage,
-                                                     perPage: self?.resultsPerPage ?? 30,
-                                                     sortedBy: .recency)) { [weak self] result in
+                                                          onPage: onPage,
+                                                          perPage: self?.resultsPerPage ?? 30,
+                                                          sortedBy: .recency)) { [weak self] result in
                 switch result {
                 case .failure(let error):
                     self?.isFetchingData = false
@@ -83,11 +83,10 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         }
     }
     
-    func resetInteractorDataCaches(_ data: RepositoryResponse?, shouldReplaceLocalCache: Bool = false) -> Void {
+    func resetInteractorDataCaches(_ data: RepositoryResponse?,shouldReplaceLocalCache: Bool = false) -> Void {
         guard let data = data else {
             return
         }
-        NSObject.printUtil(["resetting": ""])
         totalRepoSearchResultsCount = data.totalCount ?? 0
         lastFetch = data.items
         if shouldReplaceLocalCache {

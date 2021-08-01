@@ -20,19 +20,4 @@ enum APIErrors: Error {
     case queryTimeout
     case validationFailed
     case invalidRequestUrl
-    
-    var message: String {
-      switch self {
-      case .fetchError:
-        return ""
-      case .unprocessableData:
-        return ""
-      case .queryTimeout:
-        return ""
-      case .validationFailed:
-        return ""
-      case .invalidRequestUrl:
-        return ""
-      }
-    }
 }
