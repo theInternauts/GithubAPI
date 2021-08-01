@@ -40,6 +40,8 @@ class RepoSearchViewController: UIViewController {
         tableView?.delegate = self
         tableView?.prefetchDataSource = self
         tableView?.register(UIIndicatorTableViewCell.self, forCellReuseIdentifier: UIIndicatorTableViewCell.cellIdentifier)
+        tableView?.estimatedRowHeight = UIIndicatorTableViewCell.estimatedHeight
+        tableView?.rowHeight = UITableView.automaticDimension
         
         view.addSubview(tableView!)
         tableView?.pinToEdges(of: self.view, constrainToMargins: true)
@@ -93,10 +95,7 @@ extension RepoSearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard !(searchBar.text?.isEmpty ?? true) else {
-            return
-        }
-        presenter?.fetchRepos(with: searchBar.text!)
+        presenter?.fetchRepos(with: searchBar.text)
         searchBar.endEditing(true)
     }
 }
@@ -108,8 +107,7 @@ extension RepoSearchViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
             if let presenter = self.presenter {
-                presenter.fetchNextPage(with: .none)
-                NSObject.printUtil(["repo ct": "\(presenter.getRepoCount() ?? 0)"])
+                presenter.fetchNextPage()
             }
         }
     }

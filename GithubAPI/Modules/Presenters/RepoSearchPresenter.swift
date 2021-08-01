@@ -11,7 +11,7 @@ class RepoSearchPresenter {
     weak var view: RepoSearchPresenterToViewProtocol?
     var router: RepoSearchPresenterToRouterProtocol?
     var interactor: RepoSearchPresenterToInteractorProtocol?
-    private var searchQuery: String = ""
+    private var mostRecentQueryText: String = ""
     
     private func sanitizeAndFormatString(_ inputString: String) -> String {
         let whitespaceCharacterSet = CharacterSet.whitespaces
@@ -33,11 +33,11 @@ class RepoSearchPresenter {
     }
     
     private func updateRuntimeState() -> Void {
-        guard !(interactor?.getFetchStatus() ?? true) else {
+        guard !(interactor?.isFetchingDataStatus() ?? true) else {
             return
         }
         DispatchQueue.main.async { [weak self] in
-            if self?.interactor?.getPageNumber() ?? 0 > 1 {
+            if self?.interactor?.getPageNumber() ?? 0 > GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber {
                 let indexPathsToReload = self?.calculateIndexPathsToReload(from: self?.interactor?.getLastFetchResponseData())
                 self?.view?.fetchReposSuccess(with: indexPathsToReload)
             } else {
@@ -46,14 +46,20 @@ class RepoSearchPresenter {
         }
     }
     
-    private func updateSearchState(with query: String?) -> Void {
+    private func updateQueryState(with query: String?) -> Void {
         if let newQuery = query {
-            searchQuery = newQuery
+            let cleanQuery = sanitizeAndFormatString(newQuery)
+            if mostRecentQueryText != cleanQuery {
+                interactor?.resetLocalDataCaches()
+                mostRecentQueryText = newQuery
+            }
+        } else {
+            resetRuntimeState()
         }
     }
     
     private func resetRuntimeState() -> Void {
-        searchQuery = ""
+        mostRecentQueryText = ""
     }
     
     deinit {
@@ -83,28 +89,32 @@ extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
         router?.pushToRepoDetail(on: view!, with: repo)
     }
     
-    func fetchNextPage(with query: String?) -> Void {
-        guard !searchQuery.isEmpty else {
+    func fetchNextPage() -> Void {
+        guard !mostRecentQueryText.isEmpty, !interactor!.isFetchingDataStatus() else {
             return
         }
-        let pg = interactor?.getPageNumber() ?? 1
-        interactor?.fetchRepos(sanitizeAndFormatString(searchQuery), isNewSearch: false, onPage: pg)
+        let pg = interactor?.getPageNumber() ?? GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber
+        interactor?.fetchRepos(mostRecentQueryText, isNewSearch: false, onPage: pg)
     }
     
     func fetchRepos(with query: String?) -> Void {
         resetRuntimeState()
-        updateSearchState(with: query)
-        guard !searchQuery.isEmpty else {
+        updateQueryState(with: query)
+        guard !mostRecentQueryText.isEmpty else {
             return
         }
-        let pg = interactor?.getPageNumber() ?? 1
-        interactor?.fetchRepos(sanitizeAndFormatString(searchQuery), isNewSearch: true, onPage: pg)
+        let pg = interactor?.getPageNumber() ?? GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber
+        interactor?.fetchRepos(mostRecentQueryText, isNewSearch: true, onPage: pg)
     }
 }
 
 extension RepoSearchPresenter: RepoSearchInteractorToPresenterProtocol {
     func fetchReposSuccess() -> Void {
         updateRuntimeState()
+        view?.showData()
+    }
+    
+    func resetLocalDataCachesSuccess() -> Void {
         view?.showData()
     }
 }

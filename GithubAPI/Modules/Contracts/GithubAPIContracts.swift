@@ -6,5 +6,6 @@
 //
 
 protocol GitHubAPIProtocol: AnyObject {
+    static var searchRepositoriesAPIResultsStartingPageNumber: Int { get }
     func request(_ endpoint: Endpoint, then completion: @escaping (Result<RepositoryResponse, Error>) -> Void)
 }

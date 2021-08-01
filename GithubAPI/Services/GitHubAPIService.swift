@@ -23,6 +23,7 @@ class GitHubAPIService {
 
 // MARK: - GitHubAPIService: GitHubAPIProtocol
 extension GitHubAPIService: GitHubAPIProtocol {
+    static let searchRepositoriesAPIResultsStartingPageNumber = 1
     func request(_ endpoint: Endpoint,
                  then completion: @escaping (Result<RepositoryResponse, Error>) -> Void) {
         guard let url = endpoint.url else {
@@ -41,7 +42,7 @@ extension GitHubAPIService: GitHubAPIProtocol {
                 let repositoryResponse = try decoder.decode(RepositoryResponse.self, from: jsonData)
                 completion(.success(repositoryResponse))
             } catch {
-                print("-decode-fail--\(error)----")
+                NSObject.printUtil(["-decode-fail--": "\(error)"])
                 completion(.failure(APIErrors.unprocessableData))
             }
         }
@@ -57,11 +58,11 @@ struct Endpoint {
 }
 
 enum Sorting: String {
-    case numberOfStars = "stars"
-    case recency = "updated"
-    case helpIssues = "help-wanted-issues"
-    case numberOfForks = "forks"
-    case bestMatch = ""
+    case numberOfStars      = "stars"
+    case recency            = "updated"
+    case helpIssues         = "help-wanted-issues"
+    case numberOfForks      = "forks"
+    case bestMatch          = ""
 }
 
 extension Endpoint {
@@ -72,10 +73,10 @@ extension Endpoint {
         return Endpoint(
             path: "/search/repositories",
             queryItems: [
-                URLQueryItem(name: "q", value: query),
-                URLQueryItem(name: "page", value: String(onPage)),
-                URLQueryItem(name: "sort", value: sorting.rawValue),
-                URLQueryItem(name: "per_page", value: String(perPage))
+                URLQueryItem(name: "q",         value: query),
+                URLQueryItem(name: "page",      value: String(onPage)),
+                URLQueryItem(name: "sort",      value: sorting.rawValue),
+                URLQueryItem(name: "per_page",  value: String(perPage))
             ]
         )
     }
@@ -84,10 +85,10 @@ extension Endpoint {
 extension Endpoint {
     var url: URL? {
         var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.github.com"
-        components.path = path
-        components.queryItems = queryItems
+        components.scheme           = "https"
+        components.host             = "api.github.com"
+        components.path             = path
+        components.queryItems       = queryItems
         return components.url
     }
 }

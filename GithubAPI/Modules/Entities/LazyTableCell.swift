@@ -9,6 +9,7 @@ import UIKit
 
 class UIIndicatorTableViewCell: UITableViewCell {
     static let cellIdentifier: String       = "UIIndicatorCell"
+    static let estimatedHeight = CGFloat(40)
     var spinner: UIActivityIndicatorView    = {
                                                 let view    = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
                                                 view.style  = .large

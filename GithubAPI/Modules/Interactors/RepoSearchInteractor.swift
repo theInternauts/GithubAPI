@@ -11,11 +11,12 @@ class RepoSearchInteractor {
     weak var presenter: RepoSearchInteractorToPresenterProtocol?
     private var repos: [Repository]                 = []
     private var lastFetch: [Repository]             = []
-    private var dataManager: GitHubAPIProtocol      = GitHubAPIService.shared()
-    private var apiLimitRate: Double                = 1.5
+    private let dataManager: GitHubAPIProtocol      = GitHubAPIService.shared()
+    private var apiLimitRate: Double                = (60/500) // max unauthenticated rate is 60/5000
     private var isFetchingData                      = false
     private var totalRepoSearchResultsCount: Int    = 0
     private let resultsPerPage: Int                 = 30
+    private var lastRequestedPage: Int              = GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber-1
     
     
     func filterLocalData(with query: String ) -> [Repository] {
@@ -26,6 +27,11 @@ class RepoSearchInteractor {
     
     private func calcPageNumber() -> Int {
         return (getRepoCount() /  resultsPerPage) + 1
+    }
+    
+    private func hasNotReachedMaxResults() -> Bool {
+        let repoCt = getRepoCount()
+        return ((repoCt == 0 && totalRepoSearchResultsCount == 0) || (totalRepoSearchResultsCount > 0 && repoCt < totalRepoSearchResultsCount))
     }
     
     deinit {
@@ -46,7 +52,7 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         return repos[index]
     }
     
-    func getFetchStatus() -> Bool {
+    func isFetchingDataStatus() -> Bool {
         return isFetchingData
     }
     
@@ -58,11 +64,23 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         calcPageNumber()
     }
     
+    func resetLocalDataCaches() -> Void {
+        lastRequestedPage = GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber-1
+        totalRepoSearchResultsCount = 0
+        repos.removeAll()
+        lastFetch.removeAll()
+        presenter?.resetLocalDataCachesSuccess()
+    }
+    
     func fetchRepos(_ query: String, isNewSearch: Bool = false, onPage: Int) -> Void {
+        guard onPage != lastRequestedPage, hasNotReachedMaxResults() else {
+            return
+        }
+        lastRequestedPage = onPage
         isFetchingData = true
         let deadline = DispatchTime.now() + apiLimitRate
         DispatchQueue.global().ext_Throttle(deadline: deadline) { [weak self] in
-            NSObject.printUtil(["Page": "\(onPage)"])
+            NSObject.printUtil(["BEFORE-Page": "\(onPage) | Count: \(self?.getRepoCount() ?? -1)"])
             self?.dataManager.request(.searchRepositories(matching: query,
                                                           onPage: onPage,
                                                           perPage: self?.resultsPerPage ?? 30,
@@ -70,11 +88,12 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
                 switch result {
                 case .failure(let error):
                     self?.isFetchingData = false
-                    print("FAILED \(error)")
+                    NSObject.printUtil(["FAILED": "\(error)"])
                 case .success(let data):
-                    print("SUCCESS!")
-                    self?.resetInteractorDataCaches(data, shouldReplaceLocalCache: isNewSearch)
+                    NSObject.printUtil(["SUCCESS!": ""])
+                    self?.syncInteractorDataCaches(data, shouldReplaceLocalCache: isNewSearch)
                     DispatchQueue.main.async { [weak self] in
+                        NSObject.printUtil(["AFTER-Page": "\(onPage) | Count: \(self?.getRepoCount() ?? -1)"])
                         self?.isFetchingData = false
                         self?.presenter?.fetchReposSuccess()
                     }
@@ -83,7 +102,7 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         }
     }
     
-    func resetInteractorDataCaches(_ data: RepositoryResponse?,shouldReplaceLocalCache: Bool = false) -> Void {
+    func syncInteractorDataCaches(_ data: RepositoryResponse?, shouldReplaceLocalCache: Bool = false) -> Void {
         guard let data = data else {
             return
         }
