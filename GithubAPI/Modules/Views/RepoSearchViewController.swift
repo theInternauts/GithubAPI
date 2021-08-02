@@ -38,14 +38,28 @@ class RepoSearchViewController: UIViewController {
         tableView = UITableView()
         tableView?.dataSource = self
         tableView?.delegate = self
-        tableView?.prefetchDataSource = self
-        tableView?.register(UIIndicatorTableViewCell.self, forCellReuseIdentifier: UIIndicatorTableViewCell.cellIdentifier)
-        tableView?.estimatedRowHeight = UIIndicatorTableViewCell.estimatedHeight
+        tableView?.register(RepoUITableViewCell.self, forCellReuseIdentifier: RepoUITableViewCell.cellIdentifier)
+        tableView?.estimatedRowHeight = RepoUITableViewCell.estimatedHeight
         tableView?.rowHeight = UITableView.automaticDimension
-        
         view.addSubview(tableView!)
         tableView?.pinToEdges(of: self.view, constrainToMargins: true)
         tableView?.backgroundColor = .systemBackground
+    }
+    
+    func configureAndReturnTableFooter() -> UIView {
+        let footerView = UIView()
+        if let tableView = tableView {
+            footerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60)
+        }
+        let spinner = UIActivityIndicatorView()
+        footerView.addSubview(spinner)
+        spinner.color                           = .systemGray
+        spinner.hidesWhenStopped                = true
+        footerView.isUserInteractionEnabled     = false
+        spinner.center = footerView.center
+        spinner.startAnimating()
+        
+        return footerView
     }
     
     func configureSearchController() -> Void {
@@ -71,19 +85,7 @@ class RepoSearchViewController: UIViewController {
 extension RepoSearchViewController: RepoSearchPresenterToViewProtocol {
     func showData() -> Void {
         tableView?.reloadData()
-    }
-    
-    func fetchReposSuccess(with newIndexPathsToReload: [IndexPath]?) -> Void {
-        if let tableView = self.tableView {
-            guard let newIndexPathsToReload = newIndexPathsToReload else {
-                tableView.isHidden = false
-                tableView.reloadData()
-                return
-            }
-            // 2
-            let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
-            tableView.reloadRows(at: indexPathsToReload, with: .automatic)
-        }
+        tableView?.tableFooterView?.removeFromSuperview()
     }
 }
 
@@ -101,29 +103,6 @@ extension RepoSearchViewController: UISearchBarDelegate {
 }
 
 
-// MARK: - UITableViewDataSourcePrefetching
-// MARK: - Helpers for Table Prefetching
-extension RepoSearchViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: isLoadingCell) {
-            if let presenter = self.presenter {
-                presenter.fetchNextPage()
-            }
-        }
-    }
-    
-    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
-        let indexPathsForVisibleRows = tableView?.indexPathsForVisibleRows ?? []
-        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
-        return Array(indexPathsIntersection)
-    }
-    
-    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row >= presenter?.getRepoCount() ?? 0
-    }
-}
-
-
 // MARK: - UITableViewDelegate
 extension RepoSearchViewController: UITableViewDelegate {}
 
@@ -131,7 +110,10 @@ extension RepoSearchViewController: UITableViewDelegate {}
 // MARK: - UITableViewDataSource
 extension RepoSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.getTotalRepoSearchResultsCount() ?? 0
+        guard let repoCt = presenter?.getRepoCount() else {
+            return 0
+        }
+        return (repoCt > 0) ? (repoCt + 1) : 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -139,21 +121,23 @@ extension RepoSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UIIndicatorTableViewCell.cellIdentifier, for: indexPath) as! UIIndicatorTableViewCell
-        if isLoadingCell(for: indexPath) {
-//            cell.textLabel?.text = ""
-//            cell.configure(.none)
-        } else {
-            if let repo = presenter?.getRepo(at: indexPath.row) {
-                cell.configure(repo)
-//                cell.textLabel?.text = repo.fullName
-            }
+        let cell = tableView.dequeueReusableCell(withIdentifier: RepoUITableViewCell.cellIdentifier, for: indexPath) as! RepoUITableViewCell
+        if let repo = presenter?.getRepo(at: indexPath.row) {
+            cell.configure(repo)
         }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) -> Void {
         presenter?.didSelectRow(at: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (indexPath.row == presenter!.getRepoCount()) && !presenter!.isFetchingDataStatus() {
+            tableView.tableFooterView = configureAndReturnTableFooter()
+            presenter?.fetchNextPage()
+        }
     }
 }
 

@@ -10,9 +10,8 @@ import UIKit
 class RepoSearchInteractor {
     weak var presenter: RepoSearchInteractorToPresenterProtocol?
     private var repos: [Repository]                 = []
-    private var lastFetch: [Repository]             = []
     private let dataManager: GitHubAPIProtocol      = GitHubAPIService.shared()
-    private var apiLimitRate: Double                = (60/500) // max unauthenticated rate is 60/5000
+    private var apiLimitRate: Double                = (60/500) // max unauthenticated rate is 60/5000; but lets do less. Safety first
     private var isFetchingData                      = false
     private var totalRepoSearchResultsCount: Int    = 0
     private let resultsPerPage: Int                 = 30
@@ -48,16 +47,16 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         return totalRepoSearchResultsCount
     }
     
-    func getRepo(at index: Int) -> Repository {
-        return repos[index]
+    func getRepo(at index: Int) -> Repository? {
+        var repo: Repository?
+        if index < getRepoCount() {
+            repo = repos[index]
+        }
+        return repo
     }
     
     func isFetchingDataStatus() -> Bool {
         return isFetchingData
-    }
-    
-    func getLastFetchResponseData() -> [Repository] {
-        return lastFetch
     }
     
     func getPageNumber() -> Int {
@@ -68,7 +67,6 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
         lastRequestedPage = GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber-1
         totalRepoSearchResultsCount = 0
         repos.removeAll()
-        lastFetch.removeAll()
         presenter?.resetLocalDataCachesSuccess()
     }
     
@@ -93,7 +91,7 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
                     NSObject.printUtil(["SUCCESS!": ""])
                     self?.syncInteractorDataCaches(data, shouldReplaceLocalCache: isNewSearch)
                     DispatchQueue.main.async { [weak self] in
-                        NSObject.printUtil(["AFTER-Page": "\(onPage) | Count: \(self?.getRepoCount() ?? -1)"])
+                        NSObject.printUtil(["AFTER-Page": "\(onPage) | Count: \(self?.getRepoCount() ?? -1)  |  Max: \(self?.totalRepoSearchResultsCount ?? -1)"])
                         self?.isFetchingData = false
                         self?.presenter?.fetchReposSuccess()
                     }
@@ -107,10 +105,9 @@ extension RepoSearchInteractor: RepoSearchPresenterToInteractorProtocol {
             return
         }
         totalRepoSearchResultsCount = data.totalCount ?? 0
-        lastFetch = data.items
         if shouldReplaceLocalCache {
             repos.removeAll()
         }
-        repos.append(contentsOf: lastFetch)
+        repos.append(contentsOf: data.items)
     }
 }

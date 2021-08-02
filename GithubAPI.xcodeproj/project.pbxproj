@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D5DE4C526B6532D00B0398D /* LazyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4C426B6532D00B0398D /* LazyTableCell.swift */; };
 		6D5DE4C726B6871700B0398D /* RepoDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4C626B6871700B0398D /* RepoDetailRouter.swift */; };
 		6D5DE4C926B687A700B0398D /* RepoDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4C826B687A700B0398D /* RepoDetailPresenter.swift */; };
 		6D5DE4CB26B687B800B0398D /* RepoDetailContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4CA26B687B800B0398D /* RepoDetailContracts.swift */; };
@@ -15,6 +14,7 @@
 		6D5DE4CF26B687E000B0398D /* RepoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4CE26B687E000B0398D /* RepoDetailViewController.swift */; };
 		6D5DE4D126B6CC3400B0398D /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4D026B6CC3400B0398D /* ImageLoader.swift */; };
 		6D5DE4D326B6CD5B00B0398D /* ImageLoaderContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4D226B6CD5B00B0398D /* ImageLoaderContracts.swift */; };
+		6D5DE4D926B7860600B0398D /* RepoUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DE4D826B7860600B0398D /* RepoUITableViewCell.swift */; };
 		6D8C20A126B165EE00C38376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A026B165EE00C38376 /* AppDelegate.swift */; };
 		6D8C20A326B165EE00C38376 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C20A226B165EE00C38376 /* SceneDelegate.swift */; };
 		6D8C20AA26B165F300C38376 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D8C20A926B165F300C38376 /* Assets.xcassets */; };
@@ -51,7 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6D5DE4C426B6532D00B0398D /* LazyTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTableCell.swift; sourceTree = "<group>"; };
 		6D5DE4C626B6871700B0398D /* RepoDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailRouter.swift; sourceTree = "<group>"; };
 		6D5DE4C826B687A700B0398D /* RepoDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailPresenter.swift; sourceTree = "<group>"; };
 		6D5DE4CA26B687B800B0398D /* RepoDetailContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailContracts.swift; sourceTree = "<group>"; };
@@ -59,6 +58,7 @@
 		6D5DE4CE26B687E000B0398D /* RepoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoDetailViewController.swift; sourceTree = "<group>"; };
 		6D5DE4D026B6CC3400B0398D /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		6D5DE4D226B6CD5B00B0398D /* ImageLoaderContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderContracts.swift; sourceTree = "<group>"; };
+		6D5DE4D826B7860600B0398D /* RepoUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoUITableViewCell.swift; sourceTree = "<group>"; };
 		6D8C209D26B165EE00C38376 /* GithubAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D8C20A026B165EE00C38376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D8C20A226B165EE00C38376 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				6D8C20E626B1A3E400C38376 /* Repository.swift */,
-				6D5DE4C426B6532D00B0398D /* LazyTableCell.swift */,
+				6D5DE4D826B7860600B0398D /* RepoUITableViewCell.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -386,7 +386,6 @@
 				6D8C20DD26B17FB100C38376 /* RepoSearchRouter.swift in Sources */,
 				6D5DE4C926B687A700B0398D /* RepoDetailPresenter.swift in Sources */,
 				6D8C20E326B1898B00C38376 /* RepoSearchInteractor.swift in Sources */,
-				6D5DE4C526B6532D00B0398D /* LazyTableCell.swift in Sources */,
 				6D5DE4D126B6CC3400B0398D /* ImageLoader.swift in Sources */,
 				6D8C20DF26B1815B00C38376 /* RepoSearchContracts.swift in Sources */,
 				6D8C20E726B1A3E400C38376 /* Repository.swift in Sources */,
@@ -395,6 +394,7 @@
 				6D8C20A326B165EE00C38376 /* SceneDelegate.swift in Sources */,
 				6D8C20EB26B323C700C38376 /* GithubAPIContracts.swift in Sources */,
 				6D5DE4CB26B687B800B0398D /* RepoDetailContracts.swift in Sources */,
+				6D5DE4D926B7860600B0398D /* RepoUITableViewCell.swift in Sources */,
 				6D8C20E526B1953F00C38376 /* Constants.swift in Sources */,
 				6D5DE4CF26B687E000B0398D /* RepoDetailViewController.swift in Sources */,
 			);

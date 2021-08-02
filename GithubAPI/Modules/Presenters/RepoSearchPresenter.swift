@@ -32,20 +32,6 @@ class RepoSearchPresenter {
         return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
     }
     
-    private func updateRuntimeState() -> Void {
-        guard !(interactor?.isFetchingDataStatus() ?? true) else {
-            return
-        }
-        DispatchQueue.main.async { [weak self] in
-            if self?.interactor?.getPageNumber() ?? 0 > GitHubAPIService.searchRepositoriesAPIResultsStartingPageNumber {
-                let indexPathsToReload = self?.calculateIndexPathsToReload(from: self?.interactor?.getLastFetchResponseData())
-                self?.view?.fetchReposSuccess(with: indexPathsToReload)
-            } else {
-                self?.view?.fetchReposSuccess(with: .none)
-            }
-        }
-    }
-    
     private func updateQueryState(with query: String?) -> Void {
         if let newQuery = query {
             let cleanQuery = sanitizeAndFormatString(newQuery)
@@ -89,6 +75,10 @@ extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
         router?.pushToRepoDetail(on: view!, with: repo)
     }
     
+    func isFetchingDataStatus() -> Bool {
+        return interactor!.isFetchingDataStatus()
+    }
+    
     func fetchNextPage() -> Void {
         guard !mostRecentQueryText.isEmpty, !interactor!.isFetchingDataStatus() else {
             return
@@ -110,7 +100,6 @@ extension RepoSearchPresenter: RepoSearchViewToPresenterProtocol {
 
 extension RepoSearchPresenter: RepoSearchInteractorToPresenterProtocol {
     func fetchReposSuccess() -> Void {
-        updateRuntimeState()
         view?.showData()
     }
     

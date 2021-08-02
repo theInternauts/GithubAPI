@@ -16,6 +16,7 @@ protocol RepoSearchViewToPresenterProtocol: AnyObject {
     func getTotalRepoSearchResultsCount() -> Int?
     func getRepo(at index: Int) -> Repository?
     func didSelectRow(at index: Int) -> Void
+    func isFetchingDataStatus() -> Bool
     func fetchNextPage() -> Void
     func fetchRepos(with: String?) -> Void
 }
@@ -24,7 +25,6 @@ protocol RepoSearchPresenterToViewProtocol: AnyObject {
     var presenter: RepoSearchViewToPresenterProtocol? { get set }
     
     func showData() -> Void
-    func fetchReposSuccess(with newIndexPathsToReload: [IndexPath]?) -> Void
 }
 
 protocol RepoSearchPresenterToRouterProtocol: AnyObject {
@@ -37,9 +37,8 @@ protocol RepoSearchPresenterToInteractorProtocol: AnyObject {
     
     func getRepoCount() -> Int
     func getTotalRepoSearchResultsCount() -> Int
-    func getRepo(at index: Int) -> Repository
+    func getRepo(at index: Int) -> Repository?
     func isFetchingDataStatus() -> Bool
-    func getLastFetchResponseData() -> [Repository]
     func getPageNumber() -> Int
     func resetLocalDataCaches() -> Void
     func fetchRepos(_ with: String, isNewSearch: Bool, onPage: Int) -> Void
