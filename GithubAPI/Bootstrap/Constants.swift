@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - DEBUGGING UTILS
 enum GithubAPIApp {
-    static let debugUtilsEnabled = true
+    static let debugUtilsEnabled = false
 }
 
 
