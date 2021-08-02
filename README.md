@@ -3,6 +3,8 @@ an interview test
 
 ## Comments
 - I would be happy to discuss my organizational choices with you in an interview and/or phonecall.
+- I have been reading about the VIPER pattern for a few weeks now; so I thought I should try it out.  
+  I'm not sure I implemented it correctly.  I have... thoughts about it.
 - I made heavy use of protocols for easy(er) composability in the overall codebase. In theory, components can be more easily replaced in situ.
 - I took this challenge
 - I did not just sit down and type this all out from memory. Took this test an an opportunity to 
